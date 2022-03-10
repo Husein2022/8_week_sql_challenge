@@ -1,0 +1,13 @@
+1) What is the total amount each customer spent at the restaurant?
+
+SELECT sales.customer_id, SUM(price) AS total_spent
+FROM prismatic-grail-337610.dannys_diner.sales
+LEFT JOIN prismatic-grail-337610.dannys_diner.menu
+ON sales.product_id = menu.product_id
+GROUP BY sales.customer_id
+
+OUTPUT - 
+Row	customer_id	total_spent	
+1      	A         76
+2     	B         74
+3       C         36
