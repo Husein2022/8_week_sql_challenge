@@ -11,3 +11,16 @@ Row	customer_id	total_spent
 1      	A         76
 2     	B         74
 3       C         36
+
+
+2) How many days has each customer visited the restaurant?
+
+SELECT customer_id, COUNT (DISTINCT order_date) as no_of_days
+FROM prismatic-grail-337610.dannys_diner.sales
+GROUP BY customer_id
+
+OUTPUT - 
+Row	customer_id	no_of_days	
+1        A         4
+2        B         6
+3        C         2
