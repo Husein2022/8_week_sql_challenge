@@ -122,9 +122,3 @@ B	2021-02-01	ramen	12	Y	3
 C	2021-01-01	ramen	12	N	null
 C	2021-01-01	ramen	12	N	null
 C	2021-01-07	ramen	12	N	null
-
-Next Steps
-
-It’s highly recommended to save all of your code in a separate IDE or text editor as you are trying to solve the problems in the provided SQL Fiddle instance above!
-
-If you’d like to use this case study for one of your portfolio projects or in a personal blog post - please remember to link back to this URL and also don’t forget to share some LinkedIn updates using the #8WeekSQLChallenge hashtag and remember to tag me!
