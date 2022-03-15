@@ -108,3 +108,26 @@ Row	customer_id	product_count	product_name
 7	      C             3         ramen
 
 As can been seen customer A and C likes Ramen which they've ordered 3 times but customer B likes all the dishes Curry, Sushi, Ramen since he/she has ordered those equally.
+
+
+6) Which item was purchased first by the customer after they became a member?
+
+WITH table AS (
+    SELECT m.customer_id, m.join_date, s.product_id, s.order_date, RANK() OVER (PARTITION BY m.customer_id ORDER BY order_date) AS rank
+    FROM prismatic-grail-337610.dannys_diner.members AS m
+    JOIN prismatic-grail-337610.dannys_diner.sales AS s
+    ON s.customer_id = m.customer_id
+    WHERE s.order_date >= m.join_date)
+SELECT customer_id, join_date, menu.product_name, order_date
+FROM table
+JOIN prismatic-grail-337610.dannys_diner.menu
+ON table.product_id = menu.product_id
+WHERE rank = 1
+ORDER BY customer_id
+
+OUTPUT - 
+Row	customer_id	join_date	  product_name	order_date	
+1         A     2021-01-07    curry       2021-01-07
+2	        B     2021-01-09    sushi       2021-01-11
+
+Customer A ordered CURRY and B ordered SUSHI after becoming members.
