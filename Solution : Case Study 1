@@ -86,3 +86,25 @@ Row	customer_id	product_count	product_name
 1	      A             3          ramen
 2	      B             2          ramen
 3	      C             3          ramen
+
+
+5) Which item was the most popular for each customer?
+
+SELECT customer_id, COUNT(sales.product_id) AS product_count, product_name
+FROM prismatic-grail-337610.dannys_diner.sales
+JOIN prismatic-grail-337610.dannys_diner.menu
+ON sales.product_id = menu.product_id
+GROUP BY customer_id, sales.product_id, product_name
+ORDER BY customer_id
+
+OUTPUT - 
+Row	customer_id	product_count	product_name	
+1	      A             1         sushi
+2	      A             2         curry
+3	      A             3         ramen
+4	      B             2         curry
+5	      B             2         sushi
+6	      B             2         ramen
+7	      C             3         ramen
+
+As can been seen customer A and C likes Ramen which they've ordered 3 times but customer B likes all the dishes Curry, Sushi, Ramen since he/she has ordered those equally.
