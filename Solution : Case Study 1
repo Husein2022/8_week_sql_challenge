@@ -147,7 +147,6 @@ JOIN prismatic-grail-337610.dannys_diner.menu
 ON table.product_id = menu.product_id
 WHERE rank = 1
 
-
 OUTPUT - 
 Row	customer_id	  join_date	  order_date	product_name	
 1             A     2021-01-07    2021-01-01    sushi
@@ -155,3 +154,36 @@ Row	customer_id	  join_date	  order_date	product_name
 3	     B      2021-01-09    2021-01-04    sushi
 
 Before becoming the member customer A had ordered sushi and curry, whereas customer B had ordered sushi.
+
+
+8) What is the total items and amount spent by each member before they became a member?
+
+WITH table AS (
+    SELECT members.customer_id, product_id
+    FROM prismatic-grail-337610.dannys_diner.sales
+    JOIN prismatic-grail-337610.dannys_diner.members
+    ON sales.customer_id = members.customer_id
+    WHERE sales.order_date < members.join_date
+)
+SELECT customer_id,COUNT(table.product_id) AS total_item_ordered, SUM(price) AS total_amount_spent 
+FROM table
+JOIN prismatic-grail-337610.dannys_diner.menu
+ON table.product_id = menu.product_id
+GROUP BY customer_id
+
+OUTPUT - 
+Row	customer_id	total_item_ordered	total_amount_spent	
+1	        A             2                   25
+2	        B             3                   40
+
+     OR 
+
+SELECT members.customer_id, COUNT(sales.product_id) AS total_item_ordered, SUM(price) AS total_amount_spent
+FROM prismatic-grail-337610.dannys_diner.sales
+JOIN prismatic-grail-337610.dannys_diner.members
+ON sales.customer_id = members.customer_id
+JOIN prismatic-grail-337610.dannys_diner.menu
+ON sales.product_id = menu.product_id
+WHERE sales.order_date < members.join_date
+GROUP BY members.customer_id
+
