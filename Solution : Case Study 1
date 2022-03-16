@@ -150,6 +150,8 @@ WHERE rank = 1
 
 OUTPUT - 
 Row	customer_id	  join_date	  order_date	product_name	
-1         A     2021-01-07    2021-01-01    sushi
-2	        A     2021-01-07    2021-01-01    curry
-3	        B     2021-01-09    2021-01-04    sushi
+1             A     2021-01-07    2021-01-01    sushi
+2	     A      2021-01-07    2021-01-01    curry
+3	     B      2021-01-09    2021-01-04    sushi
+
+Before becoming the member customer A had ordered sushi and curry, whereas customer B had ordered sushi.
