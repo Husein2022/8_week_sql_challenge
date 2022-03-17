@@ -202,8 +202,15 @@ GROUP BY sales.customer_id
 
 OUTPUT - 
 Row	customer_id	points_earned	
-1         A         860
+1        A        860
 2	        B         940
 3	        C         360
 
+   OR
+   
+SELECT sales.customer_id, SUM(IF (product_name = 'sushi', price * 20, price * 10)) AS points_earned
+FROM prismatic-grail-337610.dannys_diner.menu
+JOIN prismatic-grail-337610.dannys_diner.sales
+ON sales.product_id = menu.product_id
+GROUP BY sales.customer_id
 
