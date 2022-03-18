@@ -214,3 +214,28 @@ JOIN prismatic-grail-337610.dannys_diner.sales
 ON sales.product_id = menu.product_id
 GROUP BY sales.customer_id
 
+
+10) In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+
+WITH table AS (SELECT sales.customer_id, sales.order_date, members.join_date, DATE_ADD(members.join_date, INTERVAL 6 DAY) AS first_week, menu.product_name, menu.price
+FROM prismatic-grail-337610.dannys_diner.sales
+     JOIN prismatic-grail-337610.dannys_diner.menu
+     ON sales.product_id = menu.product_id
+     JOIN prismatic-grail-337610.dannys_diner.members
+     ON sales.customer_id = members.customer_id)
+SELECT customer_id, SUM (CASE 
+       WHEN order_date BETWEEN join_date AND first_week THEN price * 20
+       WHEN order_date < join_date THEN IF (product_name = 'sushi', price * 20, price * 10)
+       ELSE IF (product_name = 'sushi', price * 20, price * 10)
+       END) AS points_earned 
+FROM table
+WHERE order_date <= '2021-01-31'
+GROUP BY customer_id
+
+OUTPUT -
+Row	customer_id	points_earned
+1	        A         1370
+2	        B         820
+
+At the end of January customer A has 1370 points and customer B has 820 points.
+
