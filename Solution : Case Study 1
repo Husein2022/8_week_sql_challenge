@@ -239,3 +239,35 @@ Row	customer_id	points_earned
 
 At the end of January customer A has 1370 points and customer B has 820 points.
 
+
+BONUS QUESTIONS
+Join All The Things - 
+
+SELECT sales.customer_id, sales.order_date, menu.product_name, menu.price, IF (order_date >= join_date, "Y", "N") AS member
+FROM prismatic-grail-337610.dannys_diner.sales
+JOIN prismatic-grail-337610.dannys_diner.menu
+ON sales.product_id = menu.product_id
+LEFT JOIN prismatic-grail-337610.dannys_diner.members
+ON sales.customer_id = members.customer_id
+ORDER BY customer_id
+
+OUTPUT - 
+Row	customer_id	order_date	product_name	price	member
+1	        A     2021-01-01      sushi       10    N
+2	        A     2021-01-01      curry       15    N
+3	        A     2021-01-07      curry       15    Y
+4	        A     2021-01-10      ramen       12    Y
+5	        A     2021-01-11      ramen       12    Y
+6	        A     2021-01-11      ramen       12    Y
+7	        B     2021-01-01      curry       15    N
+8	        B     2021-01-02      curry       15    N
+9	        B     2021-01-04      sushi       10    N
+10	      B     2021-01-11      sushi       10    Y
+11	      B     2021-01-16      ramen       12    Y
+12	      B     2021-02-01      ramen       12    Y
+13	      C     2021-01-01      ramen       12    N
+14	      C     2021-01-01      ramen       12    N
+15	      C     2021-01-07      ramen       12    N
+
+
+
