@@ -283,115 +283,27 @@ ORDER BY customer_id)
 SELECT *, CASE 
 WHEN member = "N" THEN NULL
 ELSE  RANK() OVER (PARTITION BY table.customer_id, member ORDER BY table.order_date)
-END 
+END AS ranking
 FROM table
 ORDER BY customer_id, order_date
 
 OUTPUT - 
 
-Row	customer_id	order_date	product_name	price	member	f0_
-1	
- A
- 2021-01-01
- sushi
- 10
- N
- null
-2	
- A
- 2021-01-01
- curry
- 15
- N
- null
-3	
- A
- 2021-01-07
- curry
- 15
- Y
- 1
-4	
- A
- 2021-01-10
- ramen
- 12
- Y
- 2
-5	
- A
- 2021-01-11
- ramen
- 12
- Y
- 3
-6	
- A
- 2021-01-11
- ramen
- 12
- Y
- 3
-7	
- B
- 2021-01-01
- curry
- 15
- N
- null
-8	
- B
- 2021-01-02
- curry
- 15
- N
- null
-9	
- B
- 2021-01-04
- sushi
- 10
- N
- null
-10	
- B
- 2021-01-11
- sushi
- 10
- Y
- 1
-11	
- B
- 2021-01-16
- ramen
- 12
- Y
- 2
-12	
- B
- 2021-02-01
- ramen
- 12
- Y
- 3
-13	
- C
- 2021-01-01
- ramen
- 12
- N
- null
-14	
- C
- 2021-01-01
- ramen
- 12
- N
- null
-15	
- C
- 2021-01-07
- ramen
- 12
- N
- null
+Row	customer_id	order_date	product_name	price	member	ranking
+1	        A     2021-01-01      sushi       10    N       null
+2	        A     2021-01-01      curry       15    N       null
+3	        A     2021-01-07      curry       15    Y       1
+4	        A     2021-01-10      ramen       12    Y       2
+5	        A     2021-01-11      ramen       12    Y       3
+6	        A     2021-01-11      ramen       12    Y       3
+7	        B     2021-01-01      curry       15    N       null
+8	        B     2021-01-02      curry       15    N       null
+9	        B     2021-01-04      sushi       10    N       null
+10	    B     2021-01-11      sushi       10    Y       1
+11	    B     2021-01-16      ramen       12    Y       2
+12	    B     2021-02-01      ramen       12    Y       3
+13	    C     2021-01-01      ramen       12    N       null
+14	    C     2021-01-01      ramen       12    N       null
+15	    C     2021-01-07      ramen       12    N       null
+
+
